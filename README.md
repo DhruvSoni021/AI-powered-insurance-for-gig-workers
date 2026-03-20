@@ -2,37 +2,35 @@
 
 
 ## 1. Problem Statement
-Many users face difficulty while choosing insurance plans and calculating premiums. 
-Manual verification also increases fraud risk and takes time.
+Gig workers in India face significant income volatility due to factors beyond their control. External disruptions—such as heavy rainfall, heatwaves, air pollution, or natural disasters can reduce working hours and lead to income losses of up to 20–30% per month.
 
-This project aims to build an AI-powered insurance platform that:
-- Suggests best insurance plans
-- Calculates premium automatically
-- Detects fraud cases
-- Provides fast claim processing
+Currently, there is no structured income protection mechanism tailored for gig workers against these risks. When disruptions occur, workers bear the full financial impact without any compensation or safety net.
+
+The challenge is to design and build an AI-enabled parametric insurance platform that:
+
+Provides income protection against external, measurable disruptions (e.g., weather, environmental conditions)
+
+Enables automated payouts based on predefined triggers (no manual claims required)
+
+Incorporates intelligent fraud detection mechanisms
+
+Operates on a simple weekly pricing model, aligned with gig workers’ earning cycles
 
 ---
 
 ## 2. Target Users (Personas)
 
-### Persona 1: Customer
-A person who wants to buy insurance easily online.
-
-Workflow:
-1. User signs up
-2. Enters personal details
-3. AI suggests best insurance plan
-4. System calculates premium
-5. User buys plan
-
 ### Persona 2: Insurance Company
 Company that manages policies and claims.
 
 Workflow:
-1. View customer applications
-2. Verify documents
-3. Approve or reject claims
-4. Detect fraud using AI
+1. User Onboarding
+2. Weekly Subscription & Policy Activation
+3. Real-Time Data Monitoring
+4. Trigger Detection
+5. Fraud Detection Layer
+6. Automated Payout Processing
+7. User Dashboard & Notifications
 
 ---
 
@@ -149,16 +147,16 @@ The application will be connected through GitHub for continuous deployment.
 
 ---
 
-## 🧪 Working Prototype (Phase 1 Scope)
+##  Working Prototype (Phase 1 Scope)
 
 For this phase, the prototype will include:
 
-### 🔐 User Authentication
+###  User Authentication
 
 * Login & Signup functionality
 * Basic user profile
 
-### 📊 Smart Dashboard
+###  Smart Dashboard
 
 * Displays:
 
@@ -167,12 +165,12 @@ For this phase, the prototype will include:
   * Risk score
   * Suggested premium
 
-### 📋 Insurance Plan Listing
+###  Insurance Plan Listing
 
 * Basic, Standard, Premium plans
 * Coverage + pricing details
 
-### 🧮 Dynamic Premium Calculator
+###  Dynamic Premium Calculator
 
 * Inputs:
 
@@ -184,7 +182,7 @@ For this phase, the prototype will include:
   * Weekly premium
   * Risk score
 
-### 🤖 Risk Score System
+###  Risk Score System
 
 * Calculates user risk based on:
 
@@ -192,7 +190,7 @@ For this phase, the prototype will include:
   * Night shifts
   * Area risk
 
-### 🚨 Basic Fraud Detection (Rule-Based)
+###  Basic Fraud Detection (Rule-Based)
 
 * Detects:
 
@@ -201,13 +199,13 @@ For this phase, the prototype will include:
 
 ---
 
-### 📌 Note:
+###  Note:
 
 This prototype demonstrates the core functionality along with initial implementation of intelligent risk-based pricing and decision-making.
 
 ---
 
-🔒 Adversarial Defense & Anti-Spoofing Strategy
+ Adversarial Defense & Anti-Spoofing Strategy
 1. Differentiation: Genuine User vs Spoofed Activity
 
 To prevent GPS spoofing attacks, our system moves beyond single-point location verification and adopts a multi-layer behavioral intelligence model.
