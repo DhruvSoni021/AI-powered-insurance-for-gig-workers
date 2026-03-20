@@ -149,15 +149,61 @@ The application will be connected through GitHub for continuous deployment.
 
 ---
 
-## 11. Working Prototype (Phase 1 Scope)
+## 🧪 Working Prototype (Phase 1 Scope)
+
 For this phase, the prototype will include:
 
-- User login and signup
-- Basic dashboard
-- Insurance plan listing
-- Premium calculator
+### 🔐 User Authentication
 
-This prototype will demonstrate the core functionality of the system.
+* Login & Signup functionality
+* Basic user profile
+
+### 📊 Smart Dashboard
+
+* Displays:
+
+  * Distance covered (mock data)
+  * Weekly earnings
+  * Risk score
+  * Suggested premium
+
+### 📋 Insurance Plan Listing
+
+* Basic, Standard, Premium plans
+* Coverage + pricing details
+
+### 🧮 Dynamic Premium Calculator
+
+* Inputs:
+
+  * Distance
+  * Working hours
+  * Shift type
+* Outputs:
+
+  * Weekly premium
+  * Risk score
+
+### 🤖 Risk Score System
+
+* Calculates user risk based on:
+
+  * Distance traveled
+  * Night shifts
+  * Area risk
+
+### 🚨 Basic Fraud Detection (Rule-Based)
+
+* Detects:
+
+  * Repeated claims
+  * Unrealistic inputs
+
+---
+
+### 📌 Note:
+
+This prototype demonstrates the core functionality along with initial implementation of intelligent risk-based pricing and decision-making.
 
 ---
 
