@@ -158,3 +158,72 @@ For this phase, the prototype will include:
 - Premium calculator
 
 This prototype will demonstrate the core functionality of the system.
+
+---
+
+🔒 Adversarial Defense & Anti-Spoofing Strategy
+1. Differentiation: Genuine User vs Spoofed Activity
+
+To prevent GPS spoofing attacks, our system moves beyond single-point location verification and adopts a multi-layer behavioral intelligence model.
+
+Instead of trusting raw GPS data, we analyze:
+
+- Movement Continuity: Genuine delivery partners exhibit natural movement patterns (routes, stops, speed variation). Spoofed GPS often shows unnatural jumps or static positioning.
+
+- Behavioral Profiling: Each user has a historical activity pattern (working hours, average distance covered, delivery frequency). Sudden deviations trigger risk flags.
+
+- Sensor Fusion Validation: GPS data is cross-verified with device sensors (accelerometer, gyroscope). A user claiming movement but showing no physical motion is flagged.
+
+- Geo-Context Consistency: Claimed location is validated against real-world constraints (roads, traffic patterns, delivery zones).
+
+This creates a trust score for each claim, allowing the system to differentiate between genuine distress situations and manipulated inputs.
+
+2. Data Signals for Fraud Detection
+
+To detect coordinated fraud rings, our platform leverages multiple data sources beyond GPS:
+
+- Device Sensor Data: Accelerometer and gyroscope to confirm physical movement
+
+- Network Metadata: Signal strength, network switching patterns (WiFi ↔ Mobile Data)
+
+- Delivery Activity Logs: Integration with platforms (e.g., order pickups, drop-offs)
+
+- Weather Correlation: Matching user activity with real-time weather severity
+
+- Device Fingerprinting: Identifying repeated usage patterns across devices/accounts
+
+- Cluster Detection: Identifying multiple users showing identical or synchronized suspicious behavior (indicative of organized fraud groups)
+
+- Time-Based Patterns: Simultaneous claim spikes from a specific region
+
+Using these signals, an AI-based anomaly detection model flags suspicious claims and detects coordinated exploitation attempts.
+
+3. UX Balance: Fair Handling of Flagged Claims
+
+To ensure honest delivery partners are not unfairly penalized, the system follows a graceful verification workflow:
+
+Soft Flagging (Not Immediate Rejection): Suspicious claims are marked for review instead of being denied
+
+Step-Up Verification:
+
+- Quick selfie or short video confirmation
+
+- Live location revalidation
+
+- Optional manual confirmation prompt
+
+Delayed Payout Mechanism: Claims under review are processed with slight delay instead of rejection
+
+Trust Score System:
+
+- High-trust users (based on history) face fewer checks
+
+- New or suspicious accounts undergo stricter validation
+
+User Transparency:
+
+- Clear communication on why a claim is flagged
+
+- Simple steps to resolve and proceed
+
+This ensures a balance between fraud prevention and user trust, maintaining platform reliability without harming genuine users.
