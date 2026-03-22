@@ -1,28 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Worker Protection AI</title>
+  <title>SAFERIDE Insurance for Gig Workers</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<header class="navbar">
+  <div class="logo">SAFERIDE</div>
+  <nav>
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="dashboard.html" class="nav-btn">Dashboard</a>
+    <a href="claims.html" class="nav-btn">Claims</a>
+  </nav>
+</header>
 
-<div class="container">
-<h1>Worker Insurance System</h1>
+<section class="hero">
+  <div class="hero-left">
+    <h1>Secure Weekly Income, Even When Weather Disrupts Work</h1>
+    <p>AI-powered parametric insurance for delivery and gig workers. Auto claim triggers, real-time risk scoring, and instant payouts at weather or safety disruptions.</p>
 
-<h2>Register Worker</h2>
+    <div class="features">
+      <div class="feature">AI Risk Assessment</div>
+      <div class="feature">Dynamic Premium</div>
+      <div class="feature">Automatic Claims</div>
+      <div class="feature">Fraud Check</div>
+    </div>
 
-<input id="name" placeholder="Enter Name">
-<input id="phone" placeholder="Phone Number">
-<input id="workType" placeholder="Work Type">
-<input id="location" placeholder="City / Location">
+    <div class="try-banner">
+      <span>Trusted by gig workers across cities  24x7 monitoring</span>
+    </div>
+  </div>
 
-<button onclick="register()">Register</button>
+  <div class="register-card">
+    <h2>Get Started</h2>
+    <p>Join 20,000+ workers protected by SAFERIDE.</p>
 
-<br><br>
-<a href="dashboard.html">Go to Dashboard</a>
-</div>
+    <input id="name" placeholder="Full Name">
+    <input id="phone" placeholder="Phone Number">
+    <input id="workType" placeholder="Type of Work">
+    <input id="location" placeholder="City">
+
+    <button onclick="register()" class="primary-btn">Get Insurance Quote</button>
+    <p class="small-text">Already registered? <a href="dashboard.html">Go to Dashboard</a></p>
+  </div>
+</section>
+
+<section class="canvas">
+  <div class="panel">
+    <h3>How it works</h3>
+    <ul>
+      <li>1. Register with your details and average weekly income.</li>
+      <li>2. AI calculates risk score and premium instantly.</li>
+      <li>3. System monitors weather & location every hour.</li>
+      <li>4. Disruption triggers automatic claim evaluation.</li>
+      <li>5. Fraud check  payout processed to worker wallet.</li>
+    </ul>
+  </div>
+
+  <div class="panel callout">
+    <h3>Premium formula</h3>
+    <p>Premium = Base Price + Weather Risk + Area Risk - Safe Zone Discount</p>
+    <p><strong>Example:</strong> ?20 + ?10 + ?8 - ?5 = ?33/week</p>
+  </div>
+</section>
 
 <script src="script.js"></script>
 </body>
