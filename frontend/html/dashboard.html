@@ -1,83 +1,86 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SafeRide AI Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<title>SAFERIDE Dashboard</title>
 <link rel="stylesheet" href="../css/dashboard.css">
-
 </head>
 
 <body>
+<header class="navbar">
+  <div class="logo">SAFERIDE</div>
+  <nav>
+    <a href="login.html" class="nav-btn">Home</a>
+    <a href="dashboard.html" class="nav-btn active">Dashboard</a>
+    <a href="claims.html" class="nav-btn">Claims</a>
+  </nav>
+</header>
 
-<!-- SIDEBAR -->
+<div class="container">
+  <div class="dashboard-header">
+    <h1>Welcome to Your Insurance Dashboard</h1>
+    <p>Monitor your policy, premiums, and claims in real-time.</p>
+  </div>
 
-<div class="sidebar">
-    <h2>🚗 SafeRide AI</h2>
-    <p>Dashboard</p>
-    <p>Ride</p>
-    <p>Alerts</p>
-    <p>Profile</p>
-</div>
+  <div id="summary" class="dashboard-grid">
+    <div class="dashboard-card">
+      <h3>Active Policy</h3>
+      <p id="activePolicy">No policy active</p>
+    </div>
+    <div class="dashboard-card">
+      <h3>Weekly Premium</h3>
+      <p id="weeklyPremium">₹0</p>
+    </div>
+    <div class="dashboard-card">
+      <h3>Claims Status</h3>
+      <p id="claimsStatus">0 approved / 0 pending</p>
+    </div>
+    <div class="dashboard-card">
+      <h3>Income Protected</h3>
+      <p id="incomeProtected">₹0</p>
+    </div>
+  </div>
 
-<!-- MAIN -->
-
-<div class="main">
-
-```
-<!-- NAVBAR -->
-<div class="navbar">
-    <h2 id="userName">Welcome</h2>
-    <button class="logout" onclick="logout()">Logout</button>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-    <div class="stat">🚗 Rides: <span id="rides">12</span></div>
-    <div class="stat">🚨 Alerts: <span id="alerts">0</span></div>
-    <div class="stat">⭐ Safe Score: <span id="score">95%</span></div>
-</div>
-
-<!-- GRID -->
-<div class="grid">
-
-    <!-- MAP -->
-    <div class="map">
-        🗺️ Live Map (Coming Soon)
+  <div class="dashboard-actions">
+    <div class="card">
+      <h3>Policy Management</h3>
+      <p>Calculate or update your AI-driven premium based on current risk factors.</p>
+      <button onclick="calculatePremium()">Calculate Premium</button>
     </div>
 
-    <!-- RIGHT PANEL -->
-    <div>
-
-        <div class="panel">
-            <h3>Ride Control</h3>
-            <p id="rideStatus">Status: OFF</p>
-            <p>⏱️ Time: <span id="timer">0</span> sec</p>
-
-            <button class="start" onclick="startRide()">Start Ride</button>
-            <button class="stop" onclick="stopRide()">Stop Ride</button>
-        </div>
-
-        <div class="panel">
-            <h3>Emergency</h3>
-            <button class="sos" onclick="emergency()">🚨 SOS</button>
-        </div>
-
-        <div class="panel">
-            <h3>AI Alerts</h3>
-            <p id="aiAlert">No alerts detected</p>
-        </div>
-
+    <div class="card">
+      <h3>Disruption Testing</h3>
+      <p>Simulate weather disruptions to test automatic claim triggers.</p>
+      <button onclick="triggerClaim()">Trigger Claim</button>
     </div>
 
+    <div class="card">
+      <h3>Claims History</h3>
+      <p>View all your past claims and payout details.</p>
+      <a href="claims.html"><button>View Claims</button></a>
+    </div>
+  </div>
+
+  <div class="recent-activity">
+    <h3>Recent Activity</h3>
+    <ul id="activityList">
+      <li>Policy activated on [Date]</li>
+      <li>Premium calculated: ₹35</li>
+      <li>Claim triggered for weather disruption</li>
+    </ul>
+  </div>
 </div>
-```
+
+<footer class="footer">
+  <p>&copy; 2026 SAFERIDE. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
 
 </div>
 
-<script src="js/dashboard.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
