@@ -1,394 +1,219 @@
-const user = localStorage.getItem("user");
+/* ============================================
+   GIGSHIELD DASHBOARD – script.js
+   ============================================ */
 
-if(!user){
-window.location.href = "index.html";
-}
+document.addEventListener('DOMContentLoaded', () => {
 
-document.getElementById("userName").innerText = "Welcome " + user + " 👋";
+  // ─── SIDEBAR TOGGLE (mobile) ─────────────────
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
 
-let rideOn = false;
-let timer = 0;
-let interval;
-
-function startRide(){
-if(rideOn) return;
-
-```
-rideOn = true;
-document.getElementById("rideStatus").innerText = "Status: ON";
-
-interval = setInterval(()=>{
-    timer++;
-    document.getElementById("timer").innerText = timer;
-    simulateAI();
-},1000);
-```
-
-}
-
-function stopRide(){
-rideOn = false;
-clearInterval(interval);
-document.getElementById("rideStatus").innerText = "Status: OFF";
-}
-
-function emergency(){
-alert("🚨 Emergency Alert Sent!");
-}
-
-function logout(){
-localStorage.removeItem("user");
-window.location.href = "index.html";
-}
-
-function simulateAI(){
-let random = Math.random();
-
-```
-if(random < 0.1){
-    document.getElementById("aiAlert").innerHTML = "⚠️ Harsh Braking Detected!";
-    document.getElementById("alerts").innerText++;
-}
-```
-
-}
-v
-/* claim */
-
-const API = "http://localhost:5000";
-
-// Register Worker
-async function register() {
-
-    const data = {
-        name: document.getElementById("name").value,
-        phone: document.getElementById("phone").value,
-        workType: document.getElementById("workType").value,
-        location: document.getElementById("location").value,
-        riskScore: Math.floor(Math.random() * 3)
-    };
-
-    const res = await fetch(`${API}/users/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+  if (menuToggle && sidebar) {
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
     });
 
-    const result = await res.json();
-    alert("Registration Successful");
-}
-
-// Calculate AI Premium
-async function calculatePremium() {
-
-    const res = await fetch(`${API}/policies/premium`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            basePremium: 20,
-            riskScore: 2,
-            city: "Delhi"
-        })
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+      if (
+        window.innerWidth <= 900 &&
+        !sidebar.contains(e.target) &&
+        !menuToggle.contains(e.target)
+      ) {
+        sidebar.classList.remove('open');
+      }
     });
+  }
 
-    const data = await res.json();
-    alert(`Premium: ₹${data.premium}\nWeather Risk: ${data.weatherRisk}`);
-}
-
-// Trigger Claim Automatically
-async function triggerClaim() {
-
-    const res = await fetch(`${API}/claims/auto`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            userId: "demoUser",
-            reason: "Heavy Rain Disruption"
-        })
-    });
-
-    const data = await res.json();
-    alert("Claim Approved ₹" + data.amount);
-}
-
-// Load Claims
-async function loadClaims() {
-
-    const res = await fetch(`${API}/claims`);
-    const claims = await res.json();
-
-    const list = document.getElementById("claimsList");
-    list.innerHTML = "";
-
-    claims.forEach(c => {
-        const li = document.createElement("li");
-        li.innerText = `User: ${c.userId} | Amount: ₹${c.amount} | Status: ${c.status}`;
-        list.appendChild(li);
-    });
-}
-
-//new
-
-const API = "http://localhost:5000";
-
-function showNotification(message) {
-    window.alert(message);
-}
-
-// Local state for demo (persistent via localStorage)
-function setCurrentUser(user) {
-    localStorage.setItem("workerPolicy", JSON.stringify(user));
-}
-
-function getCurrentUser() {
-    const stored = localStorage.getItem("workerPolicy");
-    return stored ? JSON.parse(stored) : null;
-}
-
-// Register Worker
-async function register() {
-    const user = {
-        name: document.getElementById("name").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        workType: document.getElementById("workType").value.trim(),
-        location: document.getElementById("location").value.trim(),
-        riskScore: Math.floor(Math.random() * 3) + 1,
-        premium: 0,
-        policyStatus: "pending"
-    };
-
-    if (!user.name || !user.phone || !user.workType || !user.location) {
-        showNotification("Please fill all fields before registering.");
-        return;
+  // ─── ACTIVE NAV ITEM HIGHLIGHT ───────────────
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-item, .topbar-link').forEach(link => {
+    const href = link.getAttribute('href') || '';
+    if (href && href !== '#' && currentPath.includes(href.replace('.html', ''))) {
+      link.classList.add('active');
     }
+  });
 
-    // Save in local state for simple demo UI navigation.
-    setCurrentUser(user);
+  // ─── STAGGERED CARD ANIMATIONS ───────────────
+  const cards = document.querySelectorAll('.card, .status-card');
+  cards.forEach((card, i) => {
+    card.style.animationDelay = `${i * 0.06}s`;
+  });
 
-    // Call backend for registration if API exists
-    try {
-        const res = await fetch(`${API}/users/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user)
-        });
-        if (res.ok) {
-            showNotification("Registration successful. Your AI Risk Score is " + user.riskScore);
-            window.location.href = "Dashboard.html";
-        } else {
-            showNotification("Registration saved locally; backend API did not respond.");
+  // ─── ADMIN: FILTER APPLICATIONS ──────────────
+  window.filterApplications = function () {
+    const searchVal = document.getElementById('customerSearch')?.value.toLowerCase() || '';
+    const occVal    = document.getElementById('occupationFilter')?.value || 'All Occupations';
+    const planVal   = document.getElementById('planFilter')?.value || 'All Plans';
+
+    const rows = document.querySelectorAll('#applicationsTable tbody tr');
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (!cells.length) return;
+
+      const name = cells[0]?.textContent.toLowerCase() || '';
+      const occ  = cells[1]?.textContent || '';
+      const plan = cells[3]?.textContent || '';
+
+      const matchName = !searchVal || name.includes(searchVal);
+      const matchOcc  = occVal === 'All Occupations' || occ.includes(occVal);
+      const matchPlan = planVal === 'All Plans' || plan.includes(planVal);
+
+      row.style.display = (matchName && matchOcc && matchPlan) ? '' : 'none';
+    });
+  };
+
+  // ─── CLAIMS: APPROVE/REJECT ACTIONS ──────────
+  document.querySelectorAll('.btn-approve').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const row = this.closest('tr');
+      const statusCell = row?.querySelector('.status-pill');
+      if (statusCell) {
+        statusCell.className = 'status-pill approved';
+        statusCell.textContent = 'Approved';
+      }
+      showToast('Claim approved successfully', 'success');
+    });
+  });
+
+  document.querySelectorAll('.btn-reject').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const row = this.closest('tr');
+      const statusCell = row?.querySelector('.status-pill');
+      if (statusCell) {
+        statusCell.className = 'status-pill rejected';
+        statusCell.textContent = 'Rejected';
+      }
+      showToast('Claim rejected', 'error');
+    });
+  });
+
+  // ─── CLAIMS PAGE: COUNT STATUS CARDS ─────────
+  function updateStatusCounts() {
+    const claimsTable = document.getElementById('claimsTable');
+    if (!claimsTable) return;
+
+    let pending = 0, review = 0, approved = 0, rejected = 0;
+    claimsTable.querySelectorAll('tbody .status-pill').forEach(pill => {
+      if (pill.classList.contains('pending'))  pending++;
+      if (pill.classList.contains('review'))   review++;
+      if (pill.classList.contains('approved')) approved++;
+      if (pill.classList.contains('rejected')) rejected++;
+    });
+
+    const setCount = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) animateCount(el, val);
+    };
+    setCount('pendingCount',  pending);
+    setCount('reviewCount',   review);
+    setCount('approvedCount', approved);
+    setCount('rejectedCount', rejected);
+  }
+
+  // ─── ANIMATED COUNTER ────────────────────────
+  function animateCount(el, target) {
+    const start = 0;
+    const duration = 600;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(start + (target - start) * eased);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  updateStatusCounts();
+
+  // ─── TOAST NOTIFICATION ──────────────────────
+  function showToast(message, type = 'success') {
+    // Remove any existing toast
+    document.querySelector('.gs-toast')?.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'gs-toast';
+    toast.innerHTML = `
+      <span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>
+      <span>${message}</span>
+    `;
+
+    Object.assign(toast.style, {
+      position: 'fixed',
+      bottom: '1.5rem',
+      right: '1.5rem',
+      background: type === 'success' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)',
+      border: `1px solid ${type === 'success' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`,
+      color: type === 'success' ? '#22c55e' : '#ef4444',
+      padding: '0.75rem 1.2rem',
+      borderRadius: '8px',
+      fontSize: '0.875rem',
+      fontWeight: '600',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      zIndex: '9999',
+      backdropFilter: 'blur(10px)',
+      animation: 'toastIn 0.25s ease',
+      fontFamily: "'DM Sans', sans-serif",
+    });
+
+    // Inject keyframes if not already present
+    if (!document.getElementById('toast-style')) {
+      const style = document.createElement('style');
+      style.id = 'toast-style';
+      style.textContent = `
+        @keyframes toastIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-    } catch (err) {
-        showNotification("Offline mode: registration saved locally.");
-    }
-}
-
-// Calculate AI Premium and save the policy
-async function calculatePremium() {
-    const user = getCurrentUser();
-    if (!user) {
-        showNotification("Please register first.");
-        return;
+      `;
+      document.head.appendChild(style);
     }
 
-    const formula = (base, weatherRisk, areaRisk, safeDiscount) => base + weatherRisk + areaRisk - safeDiscount;
-    const weatherRisk = user.riskScore * 8;
-    const areaRisk = Math.floor(Math.random() * 15);
-    const safeDiscount = user.location.toLowerCase().includes("safe") ? 5 : 0;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px)';
+      toast.style.transition = 'all 0.25s ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
 
-    const premium = formula(20, weatherRisk, areaRisk, safeDiscount);
-    user.premium = premium;
-    user.policyStatus = "active";
-    setCurrentUser(user);
+  // ─── PAY NOW BUTTON ───────────────────────────
+  document.querySelector('.btn-pay')?.addEventListener('click', function () {
+    showToast('Redirecting to payment gateway…', 'success');
+  });
 
-    showNotification(`Weekly Premium: ₹${premium}\nDetails: weatherRisk=${weatherRisk}, areaRisk=${areaRisk}, safeDiscount=${safeDiscount}`);
-
-    // Optional backend call
-    try {
-        await fetch(`${API}/policies/premium`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ basePremium: 20, riskScore: user.riskScore, city: user.location })
-        });
-    } catch (err) {
-        // ignore
+  // ─── SUBMIT CLAIM BUTTONS ─────────────────────
+  document.querySelectorAll('.btn-primary').forEach(btn => {
+    if (btn.textContent.trim().includes('Submit') || btn.textContent.trim().includes('New Claim')) {
+      btn.addEventListener('click', () => {
+        showToast('Opening claim submission form…', 'success');
+      });
     }
-}
+  });
 
-// Trigger Claim Automatically
-async function triggerClaim() {
-    const user = getCurrentUser();
-    if (!user || user.policyStatus !== "active") {
-        showNotification("Active policy required to trigger claim.");
-        return;
-    }
+  // ─── LOGOUT BUTTON ───────────────────────────
+  document.querySelector('.logout-btn')?.addEventListener('click', () => {
+    showToast('Logging out…', 'success');
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1500);
+  });
 
-    const claimPayload = {
-        userId: user.phone,
-        reason: "Weather Disruption",
-        status: "pending",
-        amount: Math.floor((user.premium || 40) * 10)
-    };
+  // ─── FILTER TOGGLE (claims page) ─────────────
+  document.getElementById('filterToggle')?.addEventListener('click', function () {
+    showToast('Filter panel coming soon', 'success');
+  });
 
-    // Simple fraud check emulation
-    const fraudCheck = claimPayload.amount < 1000;
-    if (!fraudCheck) {
-        showNotification("Fraud check failed. Claim denied.");
-        return;
-    }
+  // ─── TABLE ROW HOVER GLOW ────────────────────
+  document.querySelectorAll('.data-table tbody tr, .mini-table tbody tr').forEach(row => {
+    row.style.transition = 'background 0.15s';
+  });
 
-    // Save claim in session storage for claims page display
-    const existing = JSON.parse(localStorage.getItem("claimsList") || "[]");
-    existing.push({ ...claimPayload, status: "approved" });
-    localStorage.setItem("claimsList", JSON.stringify(existing));
-
-    // Backend post
-    try {
-        const res = await fetch(`${API}/claims/auto`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(claimPayload)
-        });
-        const data = await res.json();
-        showNotification(`Claim approved: ₹${data.amount || claimPayload.amount}`);
-    } catch (err) {
-        showNotification(`Claim approved locally: ₹${claimPayload.amount}`);
-    }
-}
-
-// Load Claims
-async function loadClaims() {
-    const claims = JSON.parse(localStorage.getItem("claimsList") || "[]");
-
-    const list = document.getElementById("claimsList");
-    if (!list) return;
-
-    list.innerHTML = "";
-
-    claims.forEach(c => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${c.userId}</td>
-            <td>₹${c.amount}</td>
-            <td>${c.status}</td>
-            <td>${c.reason || 'N/A'}</td>
-        `;
-        list.appendChild(tr);
-    });
-
-    // Update stats
-    const statsEl = document.getElementById("claimsStats");
-    if (statsEl) {
-        const total = claims.length;
-        const approved = claims.filter(c => c.status === "approved").length;
-        const pending = claims.filter(c => c.status === "pending").length;
-        const totalPaid = claims.reduce((sum, c) => sum + (c.status === "approved" ? Number(c.amount) : 0), 0);
-        statsEl.innerText = `Total Claims: ${total} | Approved: ${approved} | Pending: ${pending} | Total Paid: ₹${totalPaid}`;
-    }
-
-    // optionally fetch from backend to sync
-    try {
-        const res = await fetch(`${API}/claims`);
-        if (res.ok) {
-            const remoteClaims = await res.json();
-            remoteClaims.forEach(c => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${c.userId} (API)</td>
-                    <td>₹${c.amount}</td>
-                    <td>${c.status}</td>
-                    <td>${c.reason || 'N/A'}</td>
-                `;
-                list.appendChild(tr);
-            });
-        }
-    } catch (err) {
-        // ignore connectivity errors
-    }
-}
-
-function loadDashboard() {
-    const user = getCurrentUser();
-    if (!user) {
-        return;
-    }
-
-    const activePolicyEl = document.getElementById("activePolicy");
-    const weeklyPremiumEl = document.getElementById("weeklyPremium");
-    const claimsStatusEl = document.getElementById("claimsStatus");
-    const incomeProtectedEl = document.getElementById("incomeProtected");
-
-    const claims = JSON.parse(localStorage.getItem("claimsList") || "[]");
-    const approved = claims.filter(c => c.status === "approved").length;
-    const pending = claims.filter(c => c.status === "pending").length;
-    const totalPaid = claims.reduce((sum, c) => sum + (c.status === "approved" ? Number(c.amount) : 0), 0);
-
-    activePolicyEl.innerText = `${user.policyStatus.toUpperCase()} (${user.workType}, ${user.location})`;
-    weeklyPremiumEl.innerText = `₹${user.premium || 0}`;
-    claimsStatusEl.innerText = `${approved} approved / ${pending} pending`;
-    incomeProtectedEl.innerText = `₹${totalPaid}`;
-
-    // Top profile details panel
-    const info = document.createElement("div");
-    info.style.marginBottom = "20px";
-    info.className = "dashboard-card";
-    info.innerHTML =
-        `<h3>${user.name}</h3>
-        <p><strong>Phone:</strong> ${user.phone}</p>
-        <p><strong>Location:</strong> ${user.location}</p>
-        <p><strong>Work Type:</strong> ${user.workType}</p>
-        <p><strong>Risk Score:</strong> ${user.riskScore}</p>
-        <p><strong>Policy:</strong> ${user.policyStatus}</p>`;
-
-    const container = document.querySelector(".container");
-    if (container) container.insertBefore(info, container.firstChild);
-
-    // Load recent activity
-    loadRecentActivity();
-}
-
-function loadRecentActivity() {
-    const activityList = document.getElementById("activityList");
-    if (!activityList) return;
-
-    const user = getCurrentUser();
-    const claims = JSON.parse(localStorage.getItem("claimsList") || "[]");
-
-    activityList.innerHTML = "";
-
-    if (user && user.policyStatus === "active") {
-        const li = document.createElement("li");
-        li.innerText = `Policy activated for ${user.name}`;
-        activityList.appendChild(li);
-    }
-
-    if (user && user.premium) {
-        const li = document.createElement("li");
-        li.innerText = `Premium calculated: ₹${user.premium}`;
-        activityList.appendChild(li);
-    }
-
-    claims.slice(-3).forEach(c => {
-        const li = document.createElement("li");
-        li.innerText = `Claim ${c.status}: ₹${c.amount} for ${c.reason}`;
-        activityList.appendChild(li);
-    });
-
-    if (activityList.children.length === 0) {
-        const li = document.createElement("li");
-        li.innerText = "No recent activity";
-        activityList.appendChild(li);
-    }
-}
-
-if (document.readyState !== 'loading') {
-    loadDashboard();
-} else {
-    document.addEventListener('DOMContentLoaded', loadDashboard);
-}
+  console.log('GigShield Dashboard initialized ✓');
+});
