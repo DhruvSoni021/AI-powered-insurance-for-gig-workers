@@ -201,7 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.logout-btn')?.addEventListener('click', () => {
     showToast('Logging out…', 'success');
     setTimeout(() => {
-      window.location.href = 'index.html';
+      localStorage.removeItem("user");   // logout data clear
+      window.location.href = 'homepage.html';  // correct page
     }, 1500);
   });
 
