@@ -14,6 +14,15 @@ router.post("/signup", async (req, res) => {
 
         const { name, email, password } = req.body;
 
+
+        // ✅ VALIDATION ADDED HERE
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                message: "All fields are required"
+            });
+        }
+
+
         // Check existing user
         const existingUser = await User.findOne({ email });
 
@@ -59,6 +68,15 @@ router.post("/login", async (req, res) => {
     try {
 
         const { email, password } = req.body;
+        
+            
+        // ✅ VALIDATION ADDED HERE
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and password required"
+            });
+        }
+
 
         // Find user
         const user = await User.findOne({ email });
