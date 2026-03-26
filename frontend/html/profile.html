@@ -316,37 +316,64 @@
             </div>
 
             <!-- KYC / Identity -->
-            <div class="card pcard">
-              <div class="pcard-header">
-                <h3 class="pcard-title">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                  KYC &amp; Identity
-                </h3>
-              </div>
-              <div class="kyc-grid">
-                <div class="kyc-item">
-                  <div class="kyc-label">Aadhaar Number</div>
-                  <div class="kyc-val masked">XXXX XXXX 4521</div>
-                  <span class="kyc-status verified">Verified</span>
-                </div>
-                <div class="kyc-item">
-                  <div class="kyc-label">PAN Card</div>
-                  <div class="kyc-val masked">ABCPS1234F</div>
-                  <span class="kyc-status verified">Verified</span>
-                </div>
-                <div class="kyc-item">
-                  <div class="kyc-label">Driving Licence</div>
-                  <div class="kyc-val">UP16-20110123456</div>
-                  <span class="kyc-status pending-kyc">Pending</span>
-                </div>
-                <div class="kyc-item">
-                  <div class="kyc-label">GSTIN</div>
-                  <div class="kyc-val">09ABCPS1234F1Z5</div>
-                  <span class="kyc-status verified">Verified</span>
-                </div>
-              </div>
-            </div>
+             <!-- KYC / Identity -->
+<div class="card pcard">
+  <div class="pcard-header">
+    <h3 class="pcard-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+        <line x1="1" y1="10" x2="23" y2="10"/>
+      </svg>
+      KYC & Identity
+    </h3>
+  </div>
 
+  <!-- Editable KYC Form -->
+  <div class="kyc-form">
+
+    <div class="form-group">
+      <label class="field-label">Aadhaar Number</label>
+      <input type="text" class="input-field" id="aadhaarInput" placeholder="Enter 12-digit Aadhaar">
+      <button class="btn btn-outline btn-sm" onclick="verifyAadhaar()">Verify</button>
+      <span class="kyc-status" id="aadhaarStatus">Not Verified</span>
+    </div>
+
+    <div class="form-group">
+      <label class="field-label">PAN Card</label>
+      <input type="text" class="input-field" id="panInput" placeholder="Enter PAN Number">
+      <span class="kyc-status pending-kyc">Pending</span>
+    </div>
+
+    <div class="form-group">
+      <label class="field-label">Driving Licence</label>
+      <input type="text" class="input-field" id="dlInput" placeholder="Enter Driving Licence">
+    </div>
+
+    <div class="form-group">
+      <label class="field-label">GSTIN</label>
+      <input type="text" class="input-field" id="gstInput" placeholder="Enter GSTIN (optional)">
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary btn-sm" onclick="saveKYC()">Save KYC</button>
+    </div>
+
+  </div>
+
+  <!-- Aadhaar Authentication Section -->
+  <div class="aadhaar-auth-section" style="margin-top:1.5rem;">
+    <h4 style="margin-bottom:0.5rem;">Aadhaar Authentication</h4>
+
+    <div class="form-group">
+      <label class="field-label">Enter OTP</label>
+      <input type="text" class="input-field" id="aadhaarOtp" placeholder="Enter OTP sent to Aadhaar linked mobile">
+    </div>
+
+    <button class="btn btn-primary btn-sm" onclick="verifyOtp()">Verify OTP</button>
+    <span class="kyc-status pending-kyc" id="otpStatus">Waiting Verification</span>
+  </div>
+
+</div>
             <!-- Health Profile -->
             <div class="card pcard">
               <div class="pcard-header">
