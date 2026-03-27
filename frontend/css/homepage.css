@@ -38,7 +38,7 @@ ul { list-style: none; }
 img { max-width: 100%; display: block; }
 
 .container {
-  max-width: 1160px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -738,15 +738,29 @@ h4 { font-size: 1.1rem; }
    FOOTER
    ============================== */
 .footer {
+  width: 100%;
   padding: 64px 0 0;
   border-top: 1px solid var(--border);
   background: var(--bg);
 }
+.footer::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(0, 255, 209, 0.05);
+  filter: blur(100px);
+  top: -100px;
+  left: -100px;
+}
 .footer-inner {
+  justify-content: space-between;
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 40px;
-  padding-bottom: 48px;
+  grid-template-columns: 1.2fr repeat(4, 1fr);
+  gap: 60px;
+}
+.footer-links {
+  display: contents;
 }
 .footer-brand p {
   color: var(--text-muted);
@@ -773,6 +787,7 @@ h4 { font-size: 1.1rem; }
 }
 .footer-col a:hover { color: var(--accent); }
 
+
 .footer-bottom {
   display: flex;
   justify-content: space-between;
@@ -781,6 +796,72 @@ h4 { font-size: 1.1rem; }
   border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-size: 0.8rem;
+}
+/* ── Footer Social Icons ── */
+/* ── Footer Social Icons (UPGRADED) ── */
+.footer-social {
+  display: flex;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.footer-social i {
+  font-size: 1.2rem;              /* bigger icons */
+  color: var(--text-muted);
+  padding: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  transition: all 0.3s ease;
+}
+.footer-extra {
+  max-width: 220px;
+}
+
+.footer-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.footer-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-stats span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 🔥 hover effect */
+.footer-social i:hover {
+  color: var(--accent);
+  background: rgba(0, 255, 209, 0.12);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 0 12px rgba(0, 255, 209, 0.4);
+}
+.footer-social i:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 209, 0.6);
+}
+
+/* ── Footer Bottom Links ── */
+.footer-bottom-links {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-bottom-links a {
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.footer-bottom-links a:hover {
+  color: var(--accent);
 }
 
 /* ==============================
