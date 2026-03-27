@@ -101,7 +101,16 @@
           <h1 class="page-title">My Dashboard</h1>
           <p class="page-subtitle">Welcome back — here's a summary of your coverage and claims.</p>
         </div>
-        <div class="header-actions"></div>
+        <div id="workerLocation" style="
+  background:#0f172a;
+  padding:10px 16px;
+  border-radius:12px;
+  font-size:14px;
+  color:#38bdf8;
+  font-weight:500;
+">
+  Detecting live location...
+</div>
       </div>
 
       <!-- MAIN GRID — completely unchanged -->
@@ -261,6 +270,7 @@
           <div class="card risk-score-card">
             <div class="card-top-row">
               <span class="card-label">Overall Risk Score</span>
+              <h2 id="riskScore">45%</h2>
               <span class="risk-badge medium" id="riskBadgeLabel">Moderate</span>
             </div>
             <div class="risk-circle-wrap">

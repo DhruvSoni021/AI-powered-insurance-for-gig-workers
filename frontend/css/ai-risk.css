@@ -284,3 +284,9 @@
   .analytics-chart-card { grid-column: 1; }
   .sim-buttons-grid { grid-template-columns: 1fr 1fr 1fr; }
 }
+
+
+
+#riskScore {
+  transition: all 0.5s ease;
+}

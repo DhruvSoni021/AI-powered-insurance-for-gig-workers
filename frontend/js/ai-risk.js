@@ -233,3 +233,60 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
+
+const API_KEY = "23cf0e9e834b01dd83354804c7f47385";
+
+const locationBox = document.getElementById("workerLocation");
+const riskScore = document.getElementById("riskScore");
+
+function getWorkerLocation() {
+  if (!navigator.geolocation) {
+    locationBox.innerText = "Location not supported";
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+function success(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`)
+    .then(res => res.json())
+    .then(data => {
+
+      console.log("Weather API Data:", data);
+
+      const city = data.name;
+      const temp = Math.round(data.main.temp);
+      const weather = data.weather[0].main;
+      const wind = data.wind.speed;
+
+      locationBox.innerHTML = `📍 ${city} | ${temp}°C | ${weather}`;
+
+      calculateRisk(temp, weather, wind);
+    });
+}
+
+function calculateRisk(temp, weather, wind) {
+  let risk = 40;
+
+  if (temp > 35) risk += 10;
+  if (weather === "Rain") risk += 20;
+  if (weather === "Thunderstorm") risk += 30;
+  if (wind > 10) risk += 10;
+
+  if (risk > 100) risk = 100;
+
+  if (riskScore) {
+    riskScore.innerText = risk + "%";
+  }
+}
+
+function error() {
+  locationBox.innerText = "Location permission denied";
+}
+
+getWorkerLocation();
