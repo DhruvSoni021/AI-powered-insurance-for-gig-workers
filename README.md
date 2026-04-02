@@ -5,10 +5,10 @@
 
 ---
 ## Update After Phase 1 Feedback
-
-We have refactored the project from a traditional insurance model 
-to a parametric insurance system based on judge feedback.
-
+- Migrated frontend from HTML/CSS/JS → **React.js**  
+- Replaced MongoDB with **Supabase (Database + Auth)**  
+- Improved real-time data handling  
+- Enhanced scalability and modern architecture  
 ---
 
 ## 🌟 Overview  
@@ -111,15 +111,38 @@ Rahul subscribes to GIGSHIELD weekly insurance plan:
 
 
 
-User Signup  
+User Signup (Supabase Auth)  
 → AI Risk Profiling  
 → Weekly Premium Calculation  
 → Policy Activation  
-→ Continuous Monitoring  
+→ Continuous Monitoring (Weather + AQI APIs)  
 → Disruption Detected  
-→ Claim Triggered Automatically  
-→ Fraud Validation  
-→ Instant Payout  
+→ Backend validates activity  
+→ Fraud Detection Model check  
+→ Claim Auto-Triggered  
+→ Instant Payout (UPI / Razorpay)  
+
+---
+
+## 🧩 System Architecture  
+
+Frontend (React.js)  
+→ User dashboard & UI  
+
+Backend (Node.js)  
+→ APIs + business logic  
+
+Supabase  
+→ Authentication + Database + Realtime  
+
+AI Models (Python)  
+→ Risk prediction + Fraud detection  
+
+External APIs  
+→ Weather, AQI, Govt alerts  
+
+Payments  
+→ Razorpay (Instant payout simulation)  
 
 ---
 
@@ -198,13 +221,15 @@ Detects:
 Models used:
 
 - Isolation Forest  
-- Anomaly Detection  
+- Anomaly Detection
+
+👉 Model outputs are integrated with backend APIs for real-time automated decisions.
 
 ---
 
 ## 🛡️ Adversarial Defense System  
 
-To prevent misuse and ensure fairness, GIGSHIELD implements a **multi-layer fraud prevention system**:
+To prevent misuse and ensure fairness, SafeRide AI implements a **multi-layer fraud prevention system**:
 
 ### Techniques:
 
@@ -288,12 +313,12 @@ Event detected
 
 ## 🛠️ Tech Stack  
 
-Frontend: HTML, CSS, JavaScript  
-Backend: Node.js, Express  
-Database: MongoDB  
+Frontend: React.js  
+Backend: Node.js (JavaScript)  
+Database & Auth: Supabase  
 AI/ML: Python (Scikit-learn)  
 APIs: Weather + AQI  
-Payments: Razorpay  
+Payments: Razorpay   
 
 ---
 
@@ -343,7 +368,7 @@ Payments: Razorpay
 
 ## 👥 Team  
 
-Dhruv Soni , Swapnil Dwivedi ,   Prashnat Mani Srivastva ,     Ayush Uttam ,    Devansh Singh Chauhan
+Dhruv Soni , Swapnil Dwivedi ,   Prashant Mani Srivastva ,     Ayush Uttam ,    Devansh Singh Chauhan
 
 ---
 
