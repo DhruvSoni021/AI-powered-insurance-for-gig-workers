@@ -601,7 +601,10 @@ export default function Home() {
                   </div>
                   <div className="auto-flow">
                     {["Monitoring","Condition Check","Auto Claim","Payout","Notify Worker"].map((s,i)=>(
-                      <span key={s}>{i>0&&<span className="af-arrow">→</span>}<div className={`af-step ${flowDone[i]?"done":""}`}>{s}</div></span>
+                      <span key={s} style={{ display:"flex", alignItems:"center", gap:"0.4rem" }}>
+                        {i>0&&<span className="af-arrow">→</span>}
+                        <div className={`af-step ${flowDone[i]?"done":""}`}>{s}</div>
+                      </span>
                     ))}
                   </div>
                 </div>
