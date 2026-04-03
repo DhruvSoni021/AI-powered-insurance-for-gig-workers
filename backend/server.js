@@ -15,7 +15,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── Middleware ────────────────────────────────────────────────
-app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "PATCH", "DELETE"] }));
+const allowedOrigin = process.env.NODE_ENV === "production" 
+  ? (process.env.FRONTEND_URL || "*") 
+  : "*";
+
+app.use(cors({ origin: allowedOrigin, methods: ["GET", "POST", "PUT", "PATCH", "DELETE"] }));
 app.use(express.json());
 
 // ─── Health Check ──────────────────────────────────────────────
