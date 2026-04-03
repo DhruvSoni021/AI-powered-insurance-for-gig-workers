@@ -11,7 +11,7 @@ services:
         fromService:
           type: web
           name: saferide-frontend
-          envVar: RENDER_EXTERNAL_URL
+          envVarKey: RENDER_EXTERNAL_URL
 
   - type: web
     name: saferide-frontend
@@ -23,4 +23,4 @@ services:
         fromService:
           type: web
           name: saferide-backend
-          envVar: RENDER_EXTERNAL_URL
+          envVarKey: RENDER_EXTERNAL_URL
