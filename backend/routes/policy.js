@@ -84,4 +84,39 @@ router.post("/create", authenticate, async (req, res) => {
   }
 });
 
+// ──────────────────────────────────────────────────────────────
+// POST /policy/cancel
+// Protected route – requires Bearer JWT
+// Body: { userId, policyId }
+// Instantly cancels an active insurance policy
+// ──────────────────────────────────────────────────────────────
+router.post("/cancel", authenticate, async (req, res) => {
+  try {
+    const { userId, policyId } = req.body;
+
+    if (req.user.role !== "admin" && req.user.userId !== userId) {
+      return res.status(403).json({ error: "Forbidden: cannot cancel a policy for another user" });
+    }
+
+    if (!userId || !policyId) {
+      return res.status(400).json({ error: "userId and policyId are required" });
+    }
+
+    const { error } = await supabase
+      .from("policies")
+      .update({ status: "canceled", end_date: new Date().toISOString() })
+      .eq("id", policyId)
+      .eq("user_id", userId);
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.status(200).json({ message: "Policy canceled successfully" });
+  } catch (err) {
+    console.error("Policy cancel error:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 export default router;

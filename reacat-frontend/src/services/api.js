@@ -71,6 +71,8 @@ export const otpApi = {
 export const policyApi = {
   create: (policy) =>
     request("/policy/create", { method: "POST", body: policy, auth: true }),
+  cancel: (userId, policyId) =>
+    request("/policy/cancel", { method: "POST", body: { userId, policyId }, auth: true }),
 };
 
 // ═════════════════════════════════════════════════════════════

@@ -1007,9 +1007,40 @@ export default function Home() {
 
                   return (
                     <div className="card" style={{ marginBottom: "1.5rem", borderLeft: "4px solid var(--accent)", background: "linear-gradient(135deg, rgba(0, 229, 160, 0.04) 0%, rgba(0, 180, 255, 0.02) 100%)" }}>
-                      <div className="card-title" style={{ marginBottom: "0.5rem" }}>
-                        <span style={{ fontSize:"1.2rem", marginRight:"8px" }}>🟢</span> 
-                        Active Plan Tracking: <span style={{ textTransform: "capitalize", marginLeft:"6px", color:"var(--text)" }}>{activePlan.policy_type.replace(/-/g," ")}</span>
+                      <div className="card-title" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                        <div>
+                          <span style={{ fontSize:"1.2rem", marginRight:"8px" }}>🟢</span> 
+                          Active Plan Tracking: <span style={{ textTransform: "capitalize", marginLeft:"6px", color:"var(--text)" }}>{activePlan.policy_type.replace(/-/g," ")}</span>
+                        </div>
+                        <button 
+                          style={{
+                            background: "rgba(255, 68, 102, 0.15)",
+                            color: "var(--danger)",
+                            border: "1px solid rgba(255, 68, 102, 0.3)",
+                            padding: "4px 12px",
+                            borderRadius: "100px",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            transition: "all 0.2s"
+                          }}
+                          onMouseOver={(e) => e.target.style.background="rgba(255, 68, 102, 0.25)"}
+                          onMouseOut={(e) => e.target.style.background="rgba(255, 68, 102, 0.15)"}
+                          onClick={async () => {
+                            if (window.confirm("Are you sure you want to cancel your coverage? Your AI parametric protection will terminate immediately.")) {
+                              try {
+                                await policyApi.cancel(user.id, activePlan.id);
+                                setActivePolicies({});
+                                const freshDash = await dashboardApi.get(user.id);
+                                setDashData(freshDash);
+                              } catch (e) {
+                                alert("Failed to cancel: " + e.message);
+                              }
+                            }
+                          }}
+                        >
+                          Cancel Coverage ❌
+                        </button>
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem", fontSize: "0.85rem", color: "var(--text2)" }}>
                         <span>Day {passedDays} of {totalDays}</span>
