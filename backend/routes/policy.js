@@ -47,7 +47,7 @@ router.post("/create", authenticate, async (req, res) => {
     // Supersede/cancel any existing active plans before issuing a new one.
     await supabase
       .from("policies")
-      .update({ status: "canceled", end_date: new Date().toISOString() })
+      .update({ status: "canceled", end_date: new Date().toISOString().slice(0, 10) })
       .eq("user_id", userId)
       .eq("status", "active");
 
@@ -102,17 +102,23 @@ router.post("/cancel", authenticate, async (req, res) => {
       return res.status(400).json({ error: "userId and policyId are required" });
     }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("policies")
-      .update({ status: "canceled", end_date: new Date().toISOString() })
+      .update({ status: "canceled", end_date: new Date().toISOString().slice(0, 10) })
       .eq("id", policyId)
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .select();
 
     if (error) {
       return res.status(500).json({ error: error.message });
     }
 
-    return res.status(200).json({ message: "Policy canceled successfully" });
+    if (!data || data.length === 0) {
+      console.error("Cancel failed: no policy matched", { policyId, userId });
+      return res.status(404).json({ error: "Policy not found or already canceled in database." });
+    }
+
+    return res.status(200).json({ message: "Policy canceled successfully", policy: data[0] });
   } catch (err) {
     console.error("Policy cancel error:", err);
     return res.status(500).json({ error: "Internal server error" });
